@@ -7,7 +7,7 @@ description: Learn about policies and workflows related to open-source code cont
 
 <TextBlock slots="image, heading, text, links" width="50%" />
 
-![Code contributions](../_images/code.svg)
+![Code contributions](/code.svg)
 
 ## Code Contributions
 
