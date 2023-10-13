@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Basic React App | Adobe Commerce</title>
+  <script src="https://unpkg.com/penpal@^5/dist/penpal.min.js"></script>
+  <style>
+    html, body {
+      margin-top: 0px;
+      margin-left: 130px;
+      margin-right: 130px;
+      margin-bottom: 0px;
+      overflow: hidden;
+    }
+
+    h1 {
+      display: block;
+      font-size: 2em;
+      margin-block-start: 0.67em;
+      margin-block-end: 0.67em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const log = (el, info) => el.textContent = typeof info === 'object' ? JSON.stringify(info, null, 4) : String(info);
+
+    // Child needs to connect after parent
+    window.onload = () => {
+      const connection = Penpal.connectToParent({
+        methods: {
+          onShow: () => {
+            console.log('Im visible');
+          },
+          onHide: () => {
+            console.log('Im hidden');
+          }
+        },
+        timeout: 5000,
+        debug: true
+      });
+
+      // Enable buttons once connected
+      connection.promise.then((parent) => {
+
+        // Access parent info
+        Promise.all([
+          parent.getURL(),
+          
+        ]).then((data) => {
+
+          // Log info
+          console.log(new URL(data[0]));
+
+          // Update parent height to avoid duplicated scrollbar issue
+          parent.setHeight(`${document.body.scrollHeight}px`);
+        });
+      });
+    };
+  </script>
+  <h1>Basic React app</h1>
+  <p>This React app demonstrates how to make frontend calls with GraphQL API queries to an Adobe Commerce backend.</p>
+  <p>It uses the following product-based queries to fetch data that drives a simple products page that might exist on a larger storefront:</p>
+  <ul>
+    <li><pre><a href="https://developer.adobe.com/commerce/webapi/graphql/schema/products/queries/products/">products</a></pre></li>
+    <li><pre><a href="https://developer.adobe.com/commerce/webapi/graphql/schema/products/queries/categories/">categories</a></pre></li>
+  </ul>
+  <p>In addition, this app:</p>
+  <ul>
+    <li>Connects to a PWA Studio-based Adobe Commerce on cloud infrastructure project.</li>
+    <li>Does not require authentication.</li>
+    <li>Does not support GraphQL mutations.</li>
+  </ul>
+  <p>To learn more about this app, see the <a href="https://github.com/commerce-docs/PlayPI">GitHub repository</a>.</p>
+  <iframe src="https://codesandbox.io/embed/wknd-react-app-lz5elr?fontsize=14&hidenavigation=1&theme=dark"
+     style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
+     title="WKND React App"
+     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+     sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+   ></iframe>
+</body>
+</html>
